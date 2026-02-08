@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -11,7 +12,8 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import CustomButton from "@/components/CustomButton/CustomButton";
 import FormField from "@/components/FormField/FormField";
-import { Link } from "expo-router";
+import { signIn } from "@/lib/appwrite";
+import { Link, router } from "expo-router";
 import { useState } from "react";
 import { images } from "../../constants";
 
@@ -23,10 +25,23 @@ const SignIn = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const submitForm = () => {
+  const submitForm = async () => {
+    if (!form.email || !form.password) {
+      Alert.alert("Erro", "Preencha todos os campos");
+      return;
+    }
+
     setIsLoading(true);
-    console.log(form);
-    setIsLoading(false);
+    try {
+      const result = await signIn(form.email, form.password);
+      console.log(result);
+      router.replace("/home");
+    } catch (error: any) {
+      console.log(error);
+      Alert.alert("Erro", error.message || "Erro ao criar conta");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
