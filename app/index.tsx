@@ -33,7 +33,7 @@ const App = () => {
                 resizeMode="contain"
               />
             </View>
-            <View>
+            <View style={{ width: "100%" }}>
               <Text style={styles.text2}>
                 Aonde criatividade encontra o mundo: Embarque em uma jornada
                 ilimitada de criatividade

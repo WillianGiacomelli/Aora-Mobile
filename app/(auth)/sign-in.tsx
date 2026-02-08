@@ -9,7 +9,9 @@ import {
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
+import CustomButton from "@/components/CustomButton/CustomButton";
 import FormField from "@/components/FormField/FormField";
+import { Link } from "expo-router";
 import { useState } from "react";
 import { images } from "../../constants";
 
@@ -18,6 +20,14 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const submitForm = () => {
+    setIsLoading(true);
+    console.log(form);
+    setIsLoading(false);
+  };
 
   return (
     <SafeAreaProvider
@@ -53,6 +63,30 @@ const SignIn = () => {
                 handleChangeText={(e) => setForm({ ...form, password: e })}
                 keyboardType="default"
               />
+
+              <CustomButton
+                title="Entrar"
+                handlePress={submitForm}
+                textStyles=""
+                isLoading={isLoading}
+              />
+
+              <View
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 4,
+                  marginTop: 20,
+                }}
+              >
+                <Text style={styles.text2}>Não tem uma conta?</Text>
+                <Link href="/sign-up" style={styles.text3}>
+                  Cadastrar
+                </Link>
+              </View>
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
@@ -82,5 +116,21 @@ const styles = StyleSheet.create({
     fontWeight: "semibold",
     marginTop: 20,
     marginBottom: 20,
+  },
+  text2: {
+    color: "white",
+    fontSize: 16,
+    marginTop: 20,
+    marginBottom: 20,
+    textAlign: "center",
+    fontWeight: "thin",
+  },
+  text3: {
+    color: "#FF9C01",
+    fontSize: 16,
+    marginTop: 20,
+    marginBottom: 20,
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
