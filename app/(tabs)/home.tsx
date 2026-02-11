@@ -2,34 +2,18 @@ import EmptyState from "@/components/EmptyState/EmptyState";
 import SearchInput from "@/components/SearchInput/SearchInput";
 import Trending from "@/components/Trending/Trending";
 import { getAllPosts } from "@/lib/appwrite";
-import React from "react";
+import useAppwrite from "@/lib/useAppwrite";
+import React, { useState } from "react";
 import { FlatList, Image, RefreshControl, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 const Home = () => {
-  const [data, setData] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
+  const { data: posts, refetch } = useAppwrite(getAllPosts);
+  const [refreshing, setRefreshing] = useState(false);
 
-  React.useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  const fetchPosts = async () => {
-    setIsLoading(true);
-    try {
-      const posts = await getAllPosts();
-      setData(posts);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setRefreshing(true);
-    // Fetch new data here
+    await refetch();
     setRefreshing(false);
   };
 
@@ -44,10 +28,10 @@ const Home = () => {
     >
       <SafeAreaView>
         <FlatList
-          data={[{ id: "1", title: "Post 1" }]}
-          keyExtractor={(item) => item.id}
+          data={posts as any}
+          keyExtractor={(item: any) => item.$id}
           renderItem={({ item }) => (
-            <Text style={{ color: "white" }}>{item.title}</Text>
+            <VideoCard 
           )}
           ListHeaderComponent={() => (
             <View>

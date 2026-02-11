@@ -38,6 +38,10 @@ yarn-error.*
 
 app-example
 
+# appwrite
+lib/appwrite.js
+
+
 # generated native folders
 /ios
 /android
