@@ -1,10 +1,10 @@
 import { useState } from "react";
 import {
-    Image,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { icons } from "../../constants";
 
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   icon: {
     position: "absolute",
     right: 12,
-    top: 35,
+    top: -40,
     width: 24,
     height: 24,
   },

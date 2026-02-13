@@ -1,7 +1,8 @@
 import EmptyState from "@/components/EmptyState/EmptyState";
 import SearchInput from "@/components/SearchInput/SearchInput";
 import Trending from "@/components/Trending/Trending";
-import { getAllPosts } from "@/lib/appwrite";
+import VideoCard from "@/components/VideoCard/VideoCard";
+import { getAllPosts, getLatestPosts } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import React, { useState } from "react";
 import { FlatList, Image, RefreshControl, Text, View } from "react-native";
@@ -9,6 +10,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 const Home = () => {
   const { data: posts, refetch } = useAppwrite(getAllPosts);
+  const { data: latestPosts } = useAppwrite(getLatestPosts);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
@@ -31,7 +33,13 @@ const Home = () => {
           data={posts as any}
           keyExtractor={(item: any) => item.$id}
           renderItem={({ item }) => (
-            <VideoCard 
+            <VideoCard
+              title={item.title}
+              thumbnail={item.thumbnail}
+              video={item.video}
+              userId={item.userId}
+              prompt={item.prompt}
+            />
           )}
           ListHeaderComponent={() => (
             <View>
@@ -96,35 +104,7 @@ const Home = () => {
                 >
                   Últimos vídeos
                 </Text>
-                <Trending
-                  posts={[
-                    {
-                      $id: "1",
-                      title: "Post 1",
-                      video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                    },
-                    {
-                      $id: "2",
-                      title: "Post 2",
-                      video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                    },
-                    {
-                      $id: "3",
-                      title: "Post 3",
-                      video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                    },
-                    {
-                      $id: "4",
-                      title: "Post 4",
-                      video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                    },
-                    {
-                      $id: "5",
-                      title: "Post 5",
-                      video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                    },
-                  ]}
-                />
+                <Trending posts={latestPosts} />
               </View>
             </View>
           )}
