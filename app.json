@@ -4,7 +4,7 @@
     "slug": "aora-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    // "icon": "./assets/icons/android-icon-foreground.png",
+    "icon": "./assets/images/logo-small.png",
     "scheme": "aoramobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,12 +13,12 @@
       "package": "com.jsm.aora"
     },
     "android": {
-      // "adaptiveIcon": {
-      //   "backgroundColor": "#E6F4FE",
-      //   "foregroundImage": "./assets/icons/android-icon-foreground.png",
-      //   "backgroundImage": "./assets/icons/android-icon-background.png",
-      //   "monochromeImage": "./assets/icons/android-icon-monochrome.png"
-      // },
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/logo-small.png",
+        "backgroundImage": "./assets/images/logo-small.png",
+        "monochromeImage": "./assets/images/logo-small.png"
+      },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.jsm.aora"
