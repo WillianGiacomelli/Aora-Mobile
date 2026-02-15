@@ -82,7 +82,6 @@ const Home = () => {
               <SearchInput
                 value=""
                 placeholder="Pesquisar"
-                handleChangeText={() => {}}
                 keyboardType="default"
               />
 

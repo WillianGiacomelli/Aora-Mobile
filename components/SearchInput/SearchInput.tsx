@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { router, usePathname } from "expo-router";
+import { useEffect, useState } from "react";
 import {
+  Alert,
   Image,
   StyleSheet,
   TextInput,
@@ -11,15 +13,19 @@ import { icons } from "../../constants";
 const SearchInput = ({
   value,
   placeholder,
-  handleChangeText,
   keyboardType,
 }: {
   value: string;
   placeholder: string;
-  handleChangeText: (text: string) => void;
   keyboardType: "email-address" | "numeric" | "default";
 }) => {
   const [isFocused, setIsFocused] = useState(false);
+  const pathname = usePathname();
+  const [query, setQuery] = useState(value || "");
+
+  useEffect(() => {
+    setQuery(value || "");
+  }, [value]);
 
   return (
     <View style={styles.container}>
@@ -28,13 +34,22 @@ const SearchInput = ({
           style={[styles.input, isFocused && styles.inputFocused]}
           placeholder={placeholder}
           placeholderTextColor="#7b7b8b"
-          value={value}
-          onChangeText={handleChangeText}
+          value={query}
           keyboardType={keyboardType}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          onChangeText={(text) => setQuery(text)}
         />
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            if (!query) return Alert.alert("Digite uma pesquisa");
+            if (pathname.startsWith("/search")) {
+              router.setParams({ query });
+            } else {
+              router.push(`/search/${query}`);
+            }
+          }}
+        >
           <Image
             source={icons.search}
             style={styles.icon}
